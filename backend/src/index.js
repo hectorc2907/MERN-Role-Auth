@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import cookieparser from "cookie-parser";
 import cors from "cors";
 import morgan from "morgan";
+import DbCon from "./utils/db.js";
 
 //habilitamos las variables de entorno
 dotenv.config();
@@ -13,6 +14,9 @@ const PORT = process.env.PORT || 3000;
 
 //configuramos app como la ejecucion de la funcion express para facilitar la escritura
 const app = express();
+
+//iniciamos la conexion con la base de datos
+DbCon();
 
 //configuramos la aplicacion de cada dependencia importada
 app.use(express.json());
@@ -24,6 +28,6 @@ app.use(morgan("dev"));
 app.get("/", (req, res) => res.send("test"));
 
 //llamada del puerto
-app.listen(4000, () => {
-  console.log("listen on port 4000");
+app.listen(PORT, () => {
+  console.log(`Listen on PORT ${PORT}`);
 });
