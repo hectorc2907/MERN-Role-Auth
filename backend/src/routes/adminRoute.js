@@ -3,7 +3,7 @@ import express from "express";
 // Importamos los controladores que manejan las operaciones de usuario
 import { getUser, deleteUser } from "../controllers/adminController.js";
 // Importamos el middleware que verifica si el usuario es administrador
-import { isAdmin } from "../middlewares/verifyToken";
+import { isAdmin } from "../middlewares/verifyToken.js";
 
 // Creamos un nuevo enrutador usando express
 const router = express.Router();

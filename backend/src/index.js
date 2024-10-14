@@ -10,6 +10,7 @@ import DbCon from "./utils/db.js";
 
 // Importamos las rutas que usaremos en la aplicación.
 import AuthRoutes from "./routes/authRoute.js";
+import AdminRoutes from "./routes/adminRoute.js";
 
 // Habilitamos las variables de entorno utilizando dotenv.
 dotenv.config();
@@ -49,6 +50,9 @@ app.get("/", (req, res) => res.send("test"));
 
 // Rutas relacionadas con la autenticación.
 app.use("/api/auth", AuthRoutes);
+
+// Rutas relacionadas con el administrado
+app.use("/api/admin", AdminRoutes);
 
 // Iniciamos el servidor escuchando en el puerto definido y mostramos un mensaje en la consola.
 app.listen(PORT, () => {
