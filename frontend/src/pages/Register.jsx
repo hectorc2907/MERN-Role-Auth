@@ -66,7 +66,7 @@ const Register = () => {
             <label htmlFor="password">Password</label>
             <input
               type="password"
-              id="password" // Corregí la clave id que estaba mal escrita (antes: "passowrd").
+              id="password" // Corregí la clave id que estaba mal escrita.
               onChange={(e) => setPassword(e.target.value)} // Actualiza el estado al cambiar el valor.
             />
           </div>
