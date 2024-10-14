@@ -4,7 +4,10 @@ import dotenv from "dotenv";
 import cookieparser from "cookie-parser";
 import cors from "cors";
 import morgan from "morgan";
+//importamos la conexion con la base de datos
 import DbCon from "./utils/db.js";
+//importamos la rutas a utilizar
+import AuthRoutes from "./routes/authRoute.js";
 
 //habilitamos las variables de entorno
 dotenv.config();
@@ -25,7 +28,10 @@ app.use(cors());
 app.use(morgan("dev"));
 
 //ejecucion de rutas
+//esta es una ruta directa get del backend
 app.get("/", (req, res) => res.send("test"));
+//estas son rutas que se usaran para las peticiones
+app.use("/api/auth", AuthRoutes);
 
 //llamada del puerto
 app.listen(PORT, () => {
