@@ -1,12 +1,14 @@
-//importamos dependencias y herramientas del proyecto
+// Importamos las dependencias necesarias para definir rutas en Express.
 import express from "express";
-import { userRegister } from "../controllers/authController.js";
+import { userLogin, userRegister } from "../controllers/authController.js";
 
-//configuramos la funcion Router de express para el manejo de rutas
+// Configuramos el enrutador de Express para manejar las rutas relacionadas con la autenticación.
 const router = express.Router();
 
-//colocamos el metodo correspondiente seguido de su ruta y su controlador
+// Definimos la ruta para el registro de usuarios con el método POST y asignamos su controlador.
 router.post("/register", userRegister);
+// Definimos la ruta para el inicio de sesión de usuarios con el método POST y asignamos su controlador.
+router.post("/login", userLogin);
 
-//por ultimo exportamos las rutas
+// Exportamos el enrutador para que pueda ser utilizado en otros archivos.
 export default router;
