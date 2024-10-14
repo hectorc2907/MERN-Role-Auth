@@ -3,12 +3,14 @@ import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Admin from "./pages/Admin.jsx";
+import { Toaster } from "react-hot-toast";
 import "./App.css";
 
 const App = () => {
   return (
     <>
       <Router>
+        <Toaster />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />

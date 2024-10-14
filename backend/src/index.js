@@ -24,7 +24,12 @@ DbCon();
 //configuramos la aplicacion de cada dependencia importada
 app.use(express.json());
 app.use(cookieparser());
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+    origin: process.env.FRONTEND_URL,
+  })
+);
 app.use(morgan("dev"));
 
 //ejecucion de rutas
