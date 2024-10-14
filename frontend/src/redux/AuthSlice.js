@@ -33,7 +33,9 @@ const AuthSlice = createSlice({
     },
     // Reducer para manejar el logout del usuario.
     Logout: (state) => {
-      (state.user = null), (state.loading = null), (state.error = null); // Resetea el estado al cerrar sesión.
+      state.user = null;
+      state.loading = null;
+      state.error = null; // Resetea el estado al cerrar sesión.
     },
   },
 
@@ -45,13 +47,15 @@ const AuthSlice = createSlice({
     });
     // Manejador para el estado cumplido de la acción updateUser.
     builder.addCase(updateUser.fulfilled, (state, action) => {
-      (state.loading = null), (state.user = action.payload); // Establece loading a null y actualiza el usuario con la carga útil.
+      state.loading = null;
+      state.user = action.payload;
+      // Establece loading a null y actualiza el usuario con la carga útil.
     });
     // Manejador para el estado rechazado de la acción updateUser.
     builder.addCase(updateUser.rejected, (state, action) => {
-      (state.loading = null), // Establece loading a null al finalizar la operación.
-        (state.error = action.error.message), // Almacena el mensaje de error en el estado.
-        (state.user = null); // Resetea el usuario en caso de error.
+      state.loading = null; // Establece loading a null al finalizar la operación.
+      state.error = action.error.message; // Almacena el mensaje de error en el estado.
+      state.user = null; // Resetea el usuario en caso de error.
     });
   },
 });
