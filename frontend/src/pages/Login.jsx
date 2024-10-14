@@ -9,7 +9,6 @@ import { SetUser } from "../redux/AuthSlice"; // Acción para establecer el usua
 // Definimos el componente funcional Login
 const Login = () => {
   const user = useSelector((state) => state.Auth); // Obtenemos el estado del usuario desde Redux
-  console.log(user); // Mostramos el estado del usuario en la consola para depuración
   const dispatch = useDispatch(); // Inicializamos la función dispatch para enviar acciones a Redux
 
   // Declaramos los estados para email y contraseña
@@ -20,7 +19,6 @@ const Login = () => {
   // Función para manejar el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevenimos el comportamiento predeterminado del formulario
-    console.log(email); // Mostramos el email en la consola para depuración
     try {
       // Realizamos la solicitud POST al endpoint de inicio de sesión
       const request = await post("/api/auth/login", { email, password });
@@ -40,7 +38,6 @@ const Login = () => {
         toast.success(response.message); // Mostramos un mensaje de éxito
         dispatch(SetUser(response.user)); // Actualizamos el estado del usuario en Redux
       }
-      console.log(response); // Mostramos la respuesta completa en la consola para depuración
     } catch (error) {
       console.error(error); // Registramos cualquier error en la consola
       toast.error("Error durante el inicio de sesión"); // Mostramos un mensaje de error si la solicitud falla

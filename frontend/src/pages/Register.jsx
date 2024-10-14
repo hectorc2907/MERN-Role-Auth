@@ -25,8 +25,6 @@ const Register = () => {
       if (request.status === 200) {
         toast.success(response.message); // Muestra un toast con el mensaje de éxito.
       }
-
-      console.log(response); // Muestra la respuesta en la consola para depuración.
     } catch (error) {
       // Maneja cualquier error que ocurra durante la solicitud.
       console.log(error);

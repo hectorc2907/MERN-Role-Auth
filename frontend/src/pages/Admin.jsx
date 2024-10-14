@@ -3,7 +3,7 @@ import { deleteUser, get } from "../services/ApiEndpoint"; // Importa funciones 
 import { toast } from "react-hot-toast"; // Importa la función para mostrar notificaciones
 
 const Admin = () => {
-  const [users, setUsers] = useState(""); // Estado para almacenar la lista de usuarios (mejor usar [] como valor inicial)
+  const [users, setUsers] = useState([]); // Estado para almacenar la lista de usuarios (mejor usar [] como valor inicial)
 
   useEffect(() => {
     // Efecto para obtener los usuarios al montar el componente
@@ -53,23 +53,17 @@ const Admin = () => {
           </thead>
           <tbody>
             {users && // Verifica si hay usuarios para renderizar
-              users.map((elem, index) => {
-                return (
-                  <tr key={index}>
-                    {" "}
-                    {/* Utiliza index como key, pero es mejor usar un identificador único si está disponible */}
-                    <td>{elem.name}</td> {/* Muestra el nombre del usuario */}
-                    <td>{elem.email}</td> {/* Muestra el email del usuario */}
-                    <td>
-                      <button onClick={() => handleDelete(elem._id)}>
-                        {" "}
-                        {/* Botón para eliminar al usuario */}
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
+              users.map((elem) => (
+                <tr key={elem._id}>
+                  <td>{elem.name}</td>
+                  <td>{elem.email}</td>
+                  <td>
+                    <button onClick={() => handleDelete(elem._id)}>
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

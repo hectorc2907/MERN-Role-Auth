@@ -24,6 +24,12 @@ export const store = configureStore({
     // Añadimos el reductor persistente al store bajo la clave "Auth".
     Auth: persistedReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"], // Ignorar estas acciones no serializables.
+      },
+    }),
 });
 
 // Creamos el objeto persistor que se usará para persistir el estado del store.

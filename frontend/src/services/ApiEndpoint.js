@@ -39,14 +39,10 @@ instance.interceptors.request.use(
 // Interceptor de respuesta: Se ejecuta al recibir una respuesta del servidor.
 instance.interceptors.response.use(
   function (response) {
-    // Imprime la respuesta en la consola (para depuración).
-    console.log("intercept response", response);
     // Retorna la respuesta para que pueda ser usada por el llamante.
     return response;
   },
   function (error) {
-    // Imprime el error en la consola (para depuración).
-    console.log("intercept response", error);
     // Rechaza el error para que pueda ser manejado en otro lugar.
     return Promise.reject(error);
   }

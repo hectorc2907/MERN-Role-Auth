@@ -47,9 +47,10 @@ const isUser = async (req, res, next) => {
     const token = req.cookies.token;
     // Si no hay token, respondemos con un error de autorización.
     if (!token) {
-      return res
-        .status(401)
-        .json({ message: "'Unauthorized: No token provided'" });
+      // return res
+      //   .status(401)
+      //   .json({ message: "'Unauthorized: No token provided'" });
+      return
     }
 
     // Verificamos el token utilizando la clave secreta y decodificamos su contenido.
