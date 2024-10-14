@@ -149,8 +149,7 @@ table {
   border-collapse: collapse;
 }
 
-th,
-td {
+th, td {
   padding: 12px;
   text-align: left;
   border-bottom: 1px solid #dddddd;
@@ -176,41 +175,38 @@ button:hover {
 }
 /* Existing CSS */
 .home-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f4f4f4;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+background-color: #f4f4f4;
 }
 
-.user-card,
-.guest-card {
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-  padding: 30px;
-  text-align: center;
+.user-card, .guest-card {
+background-color: #ffffff;
+border-radius: 8px;
+box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+padding: 30px;
+text-align: center;
 }
 
-.logout-btn,
-.admin-btn {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #ffffff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+.logout-btn, .admin-btn {
+margin-top: 20px;
+padding: 10px 20px;
+background-color: #007bff;
+color: #ffffff;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+transition: background-color 0.3s ease;
 }
 
-.logout-btn:hover,
-.admin-btn:hover {
-  background-color: #0056b3;
+.logout-btn:hover, .admin-btn:hover {
+background-color: #0056b3;
 }
 
-.user-card h2,
-.guest-card h2 {
+
+.user-card h2, .guest-card h2 {
   color: #333333;
   margin-bottom: 20px;
 }
