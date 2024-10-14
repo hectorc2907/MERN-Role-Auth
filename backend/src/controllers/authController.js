@@ -71,7 +71,7 @@ const userLogin = async (req, res) => {
     // Establecemos una cookie en la respuesta que contiene el token JWT.
     res.cookie("token", token, {
       httpOnly: true, // Solo accesible desde el servidor para mejorar la seguridad.
-      secure: false,  // La cookie solo se enviará por HTTPS en producción (puedes cambiar esto según el entorno).
+      secure: false, // La cookie solo se enviará por HTTPS en producción (puedes cambiar esto según el entorno).
       maxAge: 3600000, // La cookie expirará en 1 hora (3600000ms).
     });
 
@@ -88,5 +88,21 @@ const userLogin = async (req, res) => {
   }
 };
 
+// Definimos la función userLogout, que maneja el cierre de sesión del usuario
+const userLogout = async (req, res) => {
+  try {
+    // Limpiamos la cookie que contiene el token de sesión
+    res.clearCookie("token");
+    // Respondemos al cliente con un estado 200 y un mensaje de éxito
+    res.status(200).json({ message: "User logout successfully" });
+  } catch (error) {
+    // En caso de error, respondemos con un estado 500 y un mensaje de error
+    res.status(500).json({ success: false, message: "internal server error" });
+    // Registramos el error en la consola para facilitar la depuración
+    console.error(error);
+  }
+};
+
+
 // Exportamos los controladores para que pueda ser utilizados en las rutas.
-export { userRegister, userLogin };
+export { userRegister, userLogin, userLogout };
