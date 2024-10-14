@@ -19,7 +19,7 @@ Este es el código fuente de un sistema de autenticación de usuarios basado en 
 
 ## 🖼️ Capturas de Pantalla
 
-![Admin]()
+![Admin](https://github.com/hectorc2907/MERN-Role-Auth/blob/dev/frontend/public/muestra.PNG)
 
 ## 🔧 Instalación
 
