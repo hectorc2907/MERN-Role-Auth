@@ -103,6 +103,27 @@ const userLogout = async (req, res) => {
   }
 };
 
+// Definimos la función userCheck, que verifica la existencia de un usuario
+const userCheck = async (req, res) => {
+  try {
+    // Recuperamos el usuario de la solicitud (req.user) que fue agregado por un middleware de autenticación
+    const user = req.user;
+
+    // Comprobamos si el usuario existe
+    if (!user) {
+      // Si el usuario no existe, respondemos con un estado 404 y un mensaje de error
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Si el usuario existe, respondemos con un estado 200 y el objeto del usuario
+    res.status(200).json(user);
+  } catch (error) {
+    // En caso de error durante el proceso, respondemos con un estado 500 y un mensaje de error
+    res.status(500).json({ message: "Internal server error" });
+    // Registramos el error en la consola para facilitar la depuración
+    console.error(error);
+  }
+};
 
 // Exportamos los controladores para que pueda ser utilizados en las rutas.
-export { userRegister, userLogin, userLogout };
+export { userRegister, userLogin, userLogout, userCheck };
