@@ -47,6 +47,7 @@ const isUser = async (req, res, next) => {
     const token = req.cookies.token;
     // Si no hay token, respondemos con un error de autorización.
     if (!token) {
+      // esta porcion de codigo evita que aparazca el error 401 cuando el usuario aun no se a logueado
       // return res
       //   .status(401)
       //   .json({ message: "'Unauthorized: No token provided'" });
