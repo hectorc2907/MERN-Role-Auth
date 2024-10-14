@@ -1,45 +1,92 @@
-//importamos dependencias y herramientas del proyecto
-import UserModel from "../models/userModel.js";
-import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
+// Importamos dependencias necesarias para la funcionalidad.
+import UserModel from "../models/userModel.js"; // Modelo de usuario para interactuar con la base de datos.
+import jwt from "jsonwebtoken"; // Librería para manejar tokens JWT
+import bcrypt from "bcryptjs"; // Librería para encriptar contraseñas.
 
-//creamos una funcion asincrona para el registro de usuarios
+// Definimos una función asíncrona para registrar nuevos usuarios.
 const userRegister = async (req, res) => {
-  //creamos un trycatch para el manejo de escenarios
+  // Usamos un bloque try-catch para manejar errores de forma controlada.
   try {
-    //recuperamos los datos a utilizar como el nombre, email y contraseña, no recuperamos el usuario ya que por defecto es "user"
+    // Extraemos los datos enviados en el cuerpo de la solicitud: nombre, email y contraseña.
     const { name, email, password } = req.body;
-    //buscamos dentro de la base de datos si ya existe un usuario con ese email registrado
+
+    // Buscamos en la base de datos si ya existe un usuario con el mismo email.
     const existUser = await UserModel.findOne({ email });
-    //verificamos si existe
+    // Verificamos si el usuario ya existe.
     if (existUser) {
-      //si existe finalizamos el proceso con un mensaje de que ya existe el email que intenta registrar
+      // Si el usuario ya está registrado, devolvemos una respuesta con estado 401 (no autorizado).
       return res
         .status(401)
         .json({ success: false, message: "User Already Exist" });
     }
 
-    //caso contrario pasamos a encriptar la contraseña
-    const hashedPassword = await bcrypt.hash(password, 10);
-    //luego tomamos los datos que vamos a registrar en nuestra base de datos
+    // Si el email no está registrado, procedemos a encriptar la contraseña.
+    const hashedPassword = await bcrypt.hash(password, 10); // El número 10 representa el costo de procesamiento del algoritmo bcrypt.
+    // Creamos un nuevo usuario con los datos proporcionados, asignando la contraseña encriptada.
     const newUser = new UserModel({
       name,
       email,
-      //es importante darle el valor de la contraseña encriptada al valor de password o nos registrara sin ser encriptada
-      password: hashedPassword,
+      password: hashedPassword, // Guardamos la contraseña encriptada en el modelo.
     });
 
-    //aguardamos a que se guarde el usuario
+    // Guardamos el nuevo usuario en la base de datos.
     await newUser.save();
-    //al guardarse el usuario nos dara la respuesta de usuario registrado exitosamente
-    res.status(200).json({ message: "user register successfully", newUser });
+    // Si el usuario se registra exitosamente, enviamos una respuesta con estado 200.
+    res.status(200).json({ message: "User registered successfully", newUser });
   } catch (error) {
-    //caso contrario nos mostrara un mensaje de error en el servicio interno
-    res.status(500).json({ success: false, message: "internal server error" });
-    //ademas mostrara por consola el error
+    // Si ocurre un error, enviamos una respuesta con estado 500 (error interno del servidor).
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+    // Mostramos el error en la consola para ayudar en la depuración.
     console.error(error);
   }
 };
 
-//exportamos los contradores
-export { userRegister };
+// Definimos una función asíncrona para manejar el inicio de sesión del usuario.
+const userLogin = async (req, res) => {
+  try {
+    // Extraemos el email y la contraseña del cuerpo de la solicitud.
+    const { email, password } = req.body;
+
+    // Buscamos un usuario en la base de datos que coincida con el email proporcionado.
+    const user = await UserModel.findOne({ email });
+    // Si no se encuentra el usuario, devolvemos una respuesta 404 con un mensaje de credenciales inválidas.
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Invalid credentials" });
+    }
+
+    // Comparamos la contraseña proporcionada con la contraseña encriptada del usuario encontrado.
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    // Si la contraseña no coincide, devolvemos una respuesta 404 con el mismo mensaje de credenciales inválidas.
+    if (!isPasswordValid) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Invalid credentials" });
+    }
+
+    // Si las credenciales son correctas, generamos un token JWT con el ID del usuario como payload.
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+
+    // Establecemos una cookie en la respuesta que contiene el token JWT.
+    res.cookie("token", token, {
+      httpOnly: true, // Solo accesible desde el servidor para mejorar la seguridad.
+      secure: false,  // La cookie solo se enviará por HTTPS en producción (puedes cambiar esto según el entorno).
+      maxAge: 3600000, // La cookie expirará en 1 hora (3600000ms).
+    });
+
+    // Enviamos una respuesta 200 indicando que el inicio de sesión fue exitoso, junto con los datos del usuario y el token.
+    res
+      .status(200)
+      .json({ success: true, message: "Login Successfully", user, token });
+  } catch (error) {
+    // Si ocurre un error, enviamos una respuesta 500 con un mensaje de error interno del servidor.
+    res.status(500).json({ success: false, message: "Internal server error" });
+
+    // Mostramos el error en la consola para facilitar la depuración.
+    console.error(error);
+  }
+};
+
+// Exportamos los controladores para que pueda ser utilizados en las rutas.
+export { userRegister, userLogin };
