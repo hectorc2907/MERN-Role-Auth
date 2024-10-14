@@ -3,6 +3,43 @@ import UserModel from "../models/userModel.js";
 // Importamos el paquete jsonwebtoken para manejar tokens JWT.
 import jwt from "jsonwebtoken";
 
+// Middleware para verificar si el usuario tiene el rol de administrador
+const isAdmin = async (req, res, next) => {
+  try {
+    const token = req.cookies.token; // Obtenemos el token del cookie de la solicitud
+    // Verificamos si no se proporciona el token
+    if (!token) {
+      return res
+        .status(401) // Enviamos un estado 401 (No autorizado)
+        .json({ message: "'Unauthorized: No token provided'" }); // Mensaje indicando que no se proporcionó token
+    }
+
+    // Verificamos el token utilizando la clave secreta definida en las variables de entorno
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    // Buscamos el usuario en la base de datos utilizando el ID del token decodificado
+    const user = await UserModel.findById(decoded.userId);
+    // Verificamos si el usuario no existe
+    if (!user) {
+      return res.status(401).json({ message: "'User not found'" }); // Enviamos un estado 401 si el usuario no se encuentra
+    }
+
+    // Verificamos si el rol del usuario no es administrador
+    if (user.role !== "admin") {
+      return res
+        .status(403) // Enviamos un estado 403 (Prohibido)
+        .json({ message: "Unauthorized: User is not an admin" }); // Mensaje indicando que el usuario no es un administrador
+    }
+
+    // Si el usuario es administrador, lo añadimos al objeto de solicitud para que esté disponible en los siguientes middleware
+    req.user = user;
+    next(); // Llamamos al siguiente middleware en la cadena
+  } catch (error) {
+    console.error(error); // Registramos cualquier error que ocurra en la consola
+    res.status(500).json({ message: "Internal server error" }); // Enviamos un estado 500 (Error interno del servidor) en caso de error
+  }
+};
+
 // Definimos el middleware isUser que verifica si el usuario está autenticado.
 const isUser = async (req, res, next) => {
   try {
@@ -34,4 +71,4 @@ const isUser = async (req, res, next) => {
 };
 
 // Exportamos el middleware para que pueda ser utilizado en otras partes de la aplicación.
-export { isUser };
+export { isAdmin, isUser };
