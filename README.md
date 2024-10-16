@@ -43,7 +43,7 @@ Si deseas clonar este repositorio y ejecutarlo en tu máquina local, sigue estos
 
    ```bash
    cd ../frontend
-   npm install @reduxjs/toolkit axios react react-dom react-hot-toast react-redux react-router-dom redux-persist
+   npm install
    npm run dev
 
    ```
@@ -52,7 +52,7 @@ Si deseas clonar este repositorio y ejecutarlo en tu máquina local, sigue estos
 
    ```bash
    cd ../backend
-   npm install bcryptjs cookie-parser cors dotenv express jsonwebtoken mongoose
+   npm install
 
    ```
 
