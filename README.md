@@ -69,10 +69,10 @@ Si deseas clonar este repositorio y ejecutarlo en tu máquina local, sigue estos
 
 ## 🎨 Personalización
 
-Puedes personalizar el portafolio ajustando los archivos de configuración de Tailwind o cambiando el contenido en los componentes de React. Aquí algunos puntos donde podrías hacer ajustes:
+Puedes personalizar la aplicación ajustando los estilos CSS y modificando los componentes de React según tus necesidades. Aquí algunos puntos donde podrías hacer ajustes:
 
-- Tailwind CSS: En el archivo tailwind.config.js para cambiar colores, fuentes, espaciados, etc.
-- Animaciones con Framer Motion: Puedes personalizar las transiciones en cualquier componente donde se use motion.
+- CSS: Modifica los estilos en los archivos `.css` para cambiar colores, fuentes, márgenes, o espaciados.
+- Componentes React: Edita el contenido y estructura de los componentes para añadir nuevas funcionalidades o cambiar el diseño.
 
 ## ✨ Características
 
