@@ -28,14 +28,14 @@ Si deseas clonar este repositorio y ejecutarlo en tu máquina local, sigue estos
 1. Clona el repositorio:
 
    ```bash
-   git clone https://github.com/hectorc2907/MERN-Role-Auth.git
+   git clone https://github.com/hectorc2907/mern-role-auth.git
 
    ```
 
 2. Ve al directorio del proyecto:
 
    ```bash
-   cd MERN-Role-Auth
+   cd mern-role-auth
 
    ```
 
